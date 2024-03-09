@@ -4,3 +4,63 @@
 *:after {
   box-sizing: border-box;
 }
+
+#main-ul {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333; 
+  color:azure;
+}
+
+#main-ul li {
+  padding: 20px;
+  padding-left: 5%;
+  flex: 1;
+}
+
+#top-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.siteName a {
+  all: unset;
+  font-size: 30px;
+}
+
+#tools a {
+  all: unset;
+}
+
+#car-info h2, h3 {
+  margin: 3px;
+  color:rgb(0, 191, 255);
+}
+
+#car-info button {
+  margin: 20px;
+}
+
+#bottom-div {
+  display: flex;
+  flex-direction: row;
+}
+
+@media only screen and (max-width: 600px) {
+  #bottom-div {
+    display: grid;
+    grid-template-rows: auto auto;
+  }
+
+  #reveiws-div {
+    grid-row: 1/2;
+  }
+
+}
