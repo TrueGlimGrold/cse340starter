@@ -1,20 +1,33 @@
+<!-- Page title -->
 <% if (title) { %>
     <h1><%= title %></h1>
     <% } else {
       res.redirect('/')
     } %>
 
-<%# messages() %>
+<!-- Error detection -->
+<% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+  <ul class="notice">
+    <% errors.forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
 
+<!-- Custom message -->
+<%- messages() %>
+
+<!-- Registration form -->
 <form action="/account/register" method="POST" id="register-form">
   <label for="firstName">First Name:</label><br>
-  <input type="text" id="firstName" name="firstName"><br>
+  <input type="text" id="firstName" name="firstName" required><br>
   <label for="lastName">Last Name:</label><br>
-  <input type="text" id="lastName" name="lastName"><br>
+  <input type="text" id="lastName" name="lastName" required><br>
   <label for="email">Email:</label><br>
-  <input type="email" class="email" name="email"><br>
+  <input type="email" class="email" name="email" required><br>
   <label for="password">Password:</label><br>
-  <input type="password" class="password" name="password"><br>
+  <span>(Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character)</span> 
+  <input type="password" class="password" name="password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"><br>
   <div class="center-button-container">
       <button type="submit" id="register-button">Register</button>
   </div>
