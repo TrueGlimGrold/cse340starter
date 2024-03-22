@@ -3,6 +3,19 @@ const utilities = require(".")
   const accountModel = require("../models/account-model")
   const validate = {}
 
+
+  validate.inventoryRules = () => {
+    return [
+        // Example validation rule for a field in the inventory form
+        body("item_name")
+            .trim()
+            .escape()
+            .notEmpty()
+            .withMessage("Item name is required."),
+        // Add more validation rules for other fields in the inventory form as needed
+    ];
+};
+
 /*  **********************************
   *  Registration Data Validation Rules
   * ********************************* */
@@ -74,5 +87,15 @@ validate.checkRegData = async (req, res, next) => {
     }
     next()
   }
+
+  validate.checkInventoryData = async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        // Handle errors if validation fails
+        return res.status(400).json({ errors: errors.array() });
+    }
+    // Continue to the next middleware if validation passes
+    next();
+};
   
 module.exports = validate

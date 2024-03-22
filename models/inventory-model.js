@@ -41,8 +41,23 @@ async function getInventoryById(inv_id) {
   }
 }
 
+/* ****************************************
+*  Insert classification into the database
+* *************************************** */
+async function insertClassification(req, res, next) {
+  try {
+      const { classification } = req.body;
+      await pool.query("INSERT INTO public.classification (classification_name) VALUES ($1)", [classification]);
+      res.redirect('/');
+  } catch (error) {
+      console.error("Error inserting classification: " + error);
+      res.status(500).send("Error inserting classification");
+  }
+}
+
 module.exports = {
   getClassifications,
   getInventoryByClassificationId,
-  getInventoryById
+  getInventoryById,
+  insertClassification
 }

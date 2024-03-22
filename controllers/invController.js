@@ -43,4 +43,36 @@ invCont.buildByInventoryId = async function (req, res, next) {
   }
 };
 
-module.exports = invCont
+/* ****************************************
+*  Deliver classification view
+* *************************************** */
+async function addClassification(req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("account/add-classification", {
+    title: "Add-Classification",
+    nav,
+    // errors: null,
+  })
+}
+
+const addInventory = async (req, res, next) => {
+  try {
+      // Assuming successful addition, render success message
+      const Message = "Inventory item added successfully!";
+      let nav = await utilities.getNav();
+      res.render("your-management-view", {
+        title: "Management",
+        nav,
+        Message
+      });
+  } catch (err) {
+      // Handle error if inventory item addition fails
+      next(err);
+  }
+};
+
+module.exports = {
+  invCont,
+  addClassification,
+  addInventory
+};
