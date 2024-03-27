@@ -30,6 +30,19 @@ router.get("/register", async (req, res) => {
     res.render("account/register", { title: "Register", nav });
 });
 
+// Account Route
+router.get("/account", async (req, res) => {
+    let nav;
+    try {
+        nav = await utilities.getNav();
+    } catch (error) {
+        console.error('Failed to fetch nav:', error);
+        nav = []; // Default value if nav fetching fails
+    }
+    router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildAccount))
+    res.render("account/account", { title: "Account", nav });
+});
+
 // router.post('/register', utilities.handleErrors(accountController.registerAccount))
 
 // Process the registration data
@@ -47,9 +60,10 @@ router.post(
 // Process the login attempt
 router.post(
     "/login",
-    (req, res) => {
-      res.status(200).send('login process')
-    }
+    regValidate.loginRules(),
+    regValidate.checkLoginData,
+    utilities.handleErrors(accountController.accountLogin)
+
 )
 
 module.exports = router;

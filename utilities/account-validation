@@ -88,14 +88,36 @@ validate.checkRegData = async (req, res, next) => {
     next()
   }
 
-  validate.checkInventoryData = async (req, res, next) => {
+validate.checkInventoryData = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      res.render("inventory/view", {
+        errors,
+        title: "Inventory Veiw",
+        nav
+      })
         // Handle errors if validation fails
         return res.status(400).json({ errors: errors.array() });
     }
     // Continue to the next middleware if validation passes
     next();
+};
+
+validate.checkUpdateData = async (req, res, next) => {
+  const inv_id = req.inv_id; 
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.render("inventory/edit", {
+      errors,
+      title: "Edit " + req.name,
+      nav,
+      inv_id
+    })
+      // Handle errors if editing fails
+      return res.status(400).json({ errors: errors.array() });
+  }
+  // Continue to the next middleware if validation passes
+  next();
 };
   
 module.exports = validate
