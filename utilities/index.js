@@ -167,4 +167,26 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
+/* ****************************************
+ *  Check Account Type
+ * ************************************ */
+Util.checkAccountType = (req, res, next) => {
+  // Get the JWT token from the request header
+  const token = req.headers.authorization.split(' ')[1];
+
+  // Verify the token
+  jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+    if (err) {
+      return res.redirect('/account/login?error=Unauthorized');
+    }
+
+    // Check if the account type is valid
+    if (decodedToken.accountType !== 'Employee' && decodedToken.accountType !== 'Admin') {
+      return res.redirect('/account/login?error=Unauthorized');
+    }
+
+    next(); // Move to the next middleware
+  });
+}
+
 module.exports = Util

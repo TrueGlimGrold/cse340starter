@@ -10,6 +10,13 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invControl
 
 router.get("localhost:5500/inv/edit/:inventory_id", utilities.handleErrors(invController.editInventory))
 
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.editInventory))
+
+// Route to handle deleting an inventory item
+router.get("/delete/:inventory_id", utilities.handleErrors(invController.buildDeleteConfirmation));
+
+router.post("/inv/delete", utilities.handleErrors(invController.deleteInventoryItem))
+
 router.post("/update/", utilities.handleErrors(invController.updateInventory))
 
 // * Week 3 assignment

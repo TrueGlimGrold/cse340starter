@@ -41,8 +41,31 @@ async function getAccountByEmail (account_email) {
   }
 }
 
+async function updateAccount(accountId, firstName, lastName, email) {
+  try {
+      const sql = "UPDATE account SET account_firstname = $1, account_lastname = $2, account_email = $3 WHERE account_id = $4";
+      await pool.query(sql, [firstName, lastName, email, accountId]);
+  } catch (error) {
+      console.error("Error updating account:", error.message);
+      throw error;
+  }
+}
+
+async function updatePassword(accountId, newPassword) {
+  try {
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      const sql = "UPDATE account SET account_password = $1 WHERE account_id = $2";
+      await pool.query(sql, [hashedPassword, accountId]);
+  } catch (error) {
+      console.error("Error updating password:", error.message);
+      throw error;
+  }
+}
+
 module.exports = {
     registerAccount, 
     checkExistingEmail,
-    getAccountByEmail
+    getAccountByEmail,
+    updateAccount,
+    updatePassword
 };

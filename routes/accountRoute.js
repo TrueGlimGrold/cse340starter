@@ -4,6 +4,10 @@ const utilities = require("../utilities/index.js");
 const accountController = require("../controllers/accountController");
 const regValidate = require('../utilities/account-validation')
 
+router.get("/update/:id", utilities.checkLogin, utilities.handleErrors(accountController.renderUpdateAccount));
+router.post("/update/:id", utilities.checkLogin, regValidate.updateAccountRules(), regValidate.checkUpdateAccountData, utilities.handleErrors(accountController.updateAccount));
+router.post("/updatePassword/:id", utilities.checkLogin, regValidate.updatePasswordRules(), regValidate.checkUpdatePasswordData, utilities.handleErrors(accountController.updatePassword));
+
 // Login route
 router.get("/login", async (req, res) => {
     let nav;
@@ -65,5 +69,11 @@ router.post(
     utilities.handleErrors(accountController.accountLogin)
 
 )
+
+// Process the logout attempt
+router.post("/logout", utilities.checkLogin, (req, res) => {
+    res.clearCookie("jwt"); // Clear the JWT token cookie
+    res.redirect("/"); // Redirect to the home view
+});
 
 module.exports = router;

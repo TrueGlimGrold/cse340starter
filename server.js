@@ -18,6 +18,8 @@ const pool = require('./database/')
 const accountRoute = require('./routes/accountRoute')
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
+const inventoryController = require('./controllers/invController');
+const jwt = require('jsonwebtoken');
 
 // Express Messages Middleware
 app.use(require('connect-flash')())
@@ -66,7 +68,7 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 app.use("/account", accountRoute)
 
 // Inventory routes
-app.use("/inv", inventoryRoute)
+app.use("/inv", Util.checkAccountType, inventoryRoute)
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {

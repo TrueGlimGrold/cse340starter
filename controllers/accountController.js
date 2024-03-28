@@ -137,6 +137,43 @@ async function account(req, res) {
   return
   }
  }
+
+ async function renderUpdateAccount(req, res) {
+  const accountId = req.params.id;
+  const accountData = await accountModel.getAccountById(accountId);
+  res.render("account/update", { title: "Update Account", accountId, firstName: accountData.account_firstname, lastName: accountData.account_lastname, email: accountData.account_email });
+}
+
+async function updateAccount(req, res) {
+  const accountId = req.params.id;
+  const { firstName, lastName, email } = req.body;
+  await accountModel.updateAccount(accountId, firstName, lastName, email);
+  req.flash("notice", "Account updated successfully.");
+  res.redirect("/account/management");
+}
+
+async function updatePassword(req, res) {
+  const accountId = req.params.id;
+  const { newPassword } = req.body;
+  await accountModel.updatePassword(accountId, newPassword);
+  req.flash("notice", "Password updated successfully.");
+  res.redirect("/account/management");
+}
+
+async function logout(req, res) {
+  res.clearCookie("jwt"); // Clear the JWT token cookie
+  res.redirect("/"); // Redirect to the home view
+}
  
 
-module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, account, buildAccount}
+module.exports = {
+  buildLogin, 
+  buildRegister, 
+  registerAccount, 
+  accountLogin, 
+  account, 
+  buildAccount, 
+  renderUpdateAccount, 
+  updateAccount, 
+  updatePassword, 
+  logout}

@@ -1,0 +1,33 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+<% } else {
+    res.redirect('/');
+} %>
+
+<%- messages() %>
+
+<!-- Account Update Form -->
+<form action="/account/update" method="post">
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName" value="<%= firstName %>" required>
+    <br>
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName" value="<%= lastName %>" required>
+    <br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="<%= email %>" required>
+    <br>
+    <input type="hidden" name="accountId" value="<%= accountId %>">
+    <br>
+    <button type="submit">Update Account</button>
+</form>
+
+<!-- Change Password Form -->
+<form action="/account/updatePassword" method="post">
+    <label for="newPassword">New Password:</label>
+    <input type="password" id="newPassword" name="newPassword" required>
+    <br>
+    <input type="hidden" name="accountId" value="<%= accountId %>">
+    <br>
+    <button type="submit">Change Password</button>
+</form>
