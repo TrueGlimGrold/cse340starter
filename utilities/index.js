@@ -21,6 +21,7 @@ Util.getNav = async function (req, res, next) {
       row.classification_name +
       "</a>"
     list += "</li>"
+    list += '<li><a href="/inv/favorites" title="Favorites">Favorites</a></li>'
   })
   list += "</ul>"
   return list

@@ -13,4 +13,8 @@
 
 <!-- * Individual Project -->
 
-<button type="submit" id="favorite-button">Favorite</button>
+<% if (req.isAuthenticated()) { %>
+  <button type="submit" id="favorite-button">Favorite</button>
+<% } else { %>
+  <p>You must be logged in to save as favorite.</p>
+<% } %>
