@@ -19,6 +19,29 @@ invCont.buildByClassificationId = async function (req, res, next) {
   })
 }
 
+// * Personal assignment
+/* ***************************
+ *  Build inventory by favorite view
+ * ************************** */
+invCont.buildByFavorite = async function (req, res, next) {
+  try {
+    // Add logic here to fetch favorite inventory items for the current user
+    // For now, let's assume you have a function to get favorites from the model
+    const favorites = await invModel.getFavoritesByUserId(req.user.id);
+    
+    // Render the view with the favorite items
+    let nav = await utilities.getNav();
+    res.render("./inventory/favorites", {
+      title: "Your Favorite Vehicles",
+      nav,
+      favorites
+    });
+  } catch (error) {
+    console.error("Error building favorites view: " + error);
+    next(error);
+  }
+};
+
 // * Week 3 assignment
 invCont.buildByInventoryId = async function (req, res, next) {
   const inv_id = req.params.inv_id; 

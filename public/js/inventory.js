@@ -43,3 +43,31 @@ function buildInventoryList(data) {
     // Display the contents in the Inventory Management view 
     inventoryDisplay.innerHTML = dataTable; 
    }
+
+// * Personal project 
+document.getElementById('favorite-button').addEventListener('click', function() {
+    // Send a request to your server to add the current inventory item to the user's account
+    fetch('/add-to-favorites', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        inv_id, /* ID of the current inventory item */
+        account_id /* ID of the current user */
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        // Handle success, e.g., show a success message
+        alert('Item added to favorites!');
+      } else {
+        // Handle error, e.g., show an error message
+        alert('Failed to add item to favorites.');
+      }
+    })
+    .catch(error => {
+      // Handle network error
+      console.error('Error:', error);
+    });
+  });

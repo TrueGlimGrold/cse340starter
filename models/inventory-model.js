@@ -106,11 +106,28 @@ async function deleteInventoryItem(inv_id) {
   }
 }
 
+async function getFavoritesByUserId(user_id) {
+  try {
+    const data = await pool.query(
+      `SELECT i.*
+       FROM public.inventory AS i
+       JOIN public.favorites AS f ON i.inv_id = f.inv_id
+       WHERE f.user_id = $1`,
+      [user_id]
+    );
+    return data.rows;
+  } catch (error) {
+    console.error("Error fetching favorites by user ID: " + error);
+    throw error;
+  }
+}
+
 module.exports = {
   getClassifications,
   getInventoryByClassificationId,
   getInventoryById,
   insertClassification,
   updateInventory,
-  deleteInventoryItem
+  deleteInventoryItem,
+  getFavoritesByUserId
 }

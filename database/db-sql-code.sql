@@ -48,6 +48,13 @@ CREATE TABLE IF NOT EXISTS public.account
     CONSTRAINT account_pkey PRIMARY KEY (account_id)
 );
 
+-- * Personal project
+CREATE TABLE IF NOT EXISTS public.favorites
+(
+    account_id integer NOT NULL,
+    inv_id integer NOT NULL
+);
+
 
 -- Data for table `classification`
 INSERT INTO public.classification (classification_name)

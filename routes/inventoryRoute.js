@@ -8,6 +8,9 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
+// * Personal Project
+router.get("/inv/favorites/:classification_id", utilities.handleErrors(invController.buildByFavorite))
+
 router.get("localhost:5500/inv/edit/:inventory_id", utilities.handleErrors(invController.editInventory))
 
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.editInventory))
